@@ -1,26 +1,23 @@
 const ctx = require('axel')
 const keypress = require('keypress')
 
+const Player = require('./player')
+
 let gameLoop
-let dir = 'down'
-let x,
-	y = 2
+
+const p1 = new Player(2, 2, 'down', [255, 0, 0])
+const p2 = new Player(98, 2, 'down', [0, 0, 255])
 
 function move() {
-	switch (dir) {
-		case 'down':
-			y++
-			break
-	}
+	p1.move()
+	p2.move()
 }
 
 function draw() {
 	// Clear the terminal
 	ctx.clear()
-	// Red box
-	ctx.bg(255, 0, 0)
-	ctx.box(x, y, 2, 2)
-
+	p1.draw()
+	p2.draw()
 	ctx.cursor.restore()
 	move()
 }
@@ -45,15 +42,18 @@ module.exports.start = function() {
 
 module.exports.registerControls = function() {
 	process.stdin.on('keypress', function(ch, key) {
-		if (key) {
-			if (key.name == 'escape') endGame()
-			if (key.name == 'q') endGame()
-			if (key.name == 'left') dir = 'left'
-			if (key.name == 'right') dir = 'right'
-			if (key.name == 'up') dir = 'up'
-			if (key.name == 'down') dir = 'down'
+		switch (key.name) {
+			case 'escape':
+			case 'q':
+				endGame()
+				break
+			case 'up':
+			case 'down':
+			case 'left':
+			case 'right':
+				p1.setDir(key.name)
+				break
 		}
-
 		if (key && key.ctrl && key.name == 'c') {
 			endGame()
 		}
