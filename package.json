@@ -1,0 +1,34 @@
+{
+	"name": "snaketron",
+	"version": "0.0.0",
+	"description": "",
+	"license": "MIT",
+	"repository": "snaketron",
+	"author": {
+		"name": "huarui wu",
+		"email": "huarui.wu@gmail.com",
+		"url": "github.com/huaruiwu"
+	},
+	"bin": {
+		"snaketron": "snaketron.js"
+	},
+	"engines": {
+		"node": ">=4"
+	},
+	"scripts": {
+		"test": "echo no tests written"
+	},
+	"files": [
+		"snaketron.js"
+	],
+	"keywords": [
+		"snaketron",
+		""
+	],
+	"dependencies": {
+		"axel": "0.0.3",
+		"blessed": "^0.1.81",
+		"meow": "^3.7.0"
+	},
+	"devDependencies": {}
+}
