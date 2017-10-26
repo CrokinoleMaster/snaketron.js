@@ -1,20 +1,11 @@
 const ctx = require('axel')
 
 class Player {
-	constructor(
-		x = 0,
-		y = 0,
-		dir = 'down',
-		color = [255, 0, 0],
-		width = 2,
-		height = 2
-	) {
-		this.x = x
-		this.y = y
+	constructor(x = 0, y = 0, dir = 'down', color = [255, 0, 0], size = 1) {
+		this.body = [[x, y]]
 		this.dir = dir
 		this.color = color
-		this.width = width
-		this.height = height
+		this.size = size
 	}
 
 	setDir(dir) {
@@ -22,26 +13,31 @@ class Player {
 	}
 
 	move() {
+		const { body, size } = this
+		const [x, y] = body[body.length - 1]
 		switch (this.dir) {
 			case 'up':
-				this.y--
+				body.push([x, y - size])
 				break
 			case 'down':
-				this.y++
+				body.push([x, y + size])
 				break
 			case 'left':
-				this.x--
+				body.push([x - 2 * size, y])
 				break
 			case 'right':
-				this.x++
+				body.push([x + 2 * size, y])
 				break
 		}
+		body.slice(1)
 	}
 
 	draw() {
-		const { x, y, color, width, height } = this
-		ctx.bg(color[0], color[1], color[2])
-		ctx.box(x, y, width, height)
+		const { body, color, size } = this
+		body.forEach(([x, y]) => {
+			ctx.bg(color[0], color[1], color[2])
+			ctx.box(x, y, size * 2, size)
+		})
 	}
 }
 
