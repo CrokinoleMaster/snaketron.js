@@ -5,8 +5,8 @@ const Player = require('./player')
 
 let gameLoop
 
-const p1 = new Player(10, 2, 'down', [255, 0, 0])
-const p2 = new Player(ctx.cols - 10, 2, 'down', [0, 0, 255])
+const p1 = new Player(10, 20, 'down', [255, 0, 0])
+const p2 = new Player(ctx.cols - 10, 20, 'down', [0, 0, 255])
 
 function move() {
 	p1.move()

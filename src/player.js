@@ -1,8 +1,18 @@
 const ctx = require('axel')
 
 class Player {
-	constructor(x = 0, y = 0, dir = 'down', color = [255, 0, 0], size = 1) {
-		this.body = [[x, y]]
+	constructor(
+		x = 0,
+		y = 0,
+		dir = 'down',
+		color = [255, 0, 0],
+		size = 1,
+		length = 10
+	) {
+		this.body = []
+		for (let i = 0; i < length; i++) {
+			this.body.push([x, y - i])
+		}
 		this.dir = dir
 		this.color = color
 		this.size = size
