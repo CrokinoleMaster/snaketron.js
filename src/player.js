@@ -29,7 +29,7 @@ class Player {
 				body.push([x + 2 * size, y])
 				break
 		}
-		body.slice(1)
+		this.body = body.slice(1)
 	}
 
 	draw() {
