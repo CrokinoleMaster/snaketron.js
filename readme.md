@@ -1,7 +1,4 @@
-# <%= moduleName %>-cli [![Build Status](https://travis-ci.org/<%= githubUsername %>/<%= moduleName %>-cli.svg?branch=master)](https://travis-ci.org/<%= githubUsername %>/<%= moduleName %>-cli)
-
->
-
+### wip
 
 ## Install
 
