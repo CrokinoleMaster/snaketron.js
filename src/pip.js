@@ -1,8 +1,16 @@
 const ctx = require('axel')
 
+const { getGameWidth } = require('./utils')
+
 class Pip {
-	constructor(color = [255, 0, 0]) {
+	constructor(
+		x = getGameWidth() / 2,
+		y = Math.floor(ctx.rows / 2),
+		color = [255, 0, 0],
+		size = 1
+	) {
 		this.color = color
+		this.size = size
 		this.moveToRandLocation()
 	}
 
@@ -13,7 +21,11 @@ class Pip {
 		this.y = y
 	}
 
-	draw() {}
+	draw() {
+		const { color, x, y, size } = this
+		ctx.bg(color[0], color[1], color[2])
+		ctx.box(x, y, size * 2, size)
+	}
 }
 
 module.exports = Pip

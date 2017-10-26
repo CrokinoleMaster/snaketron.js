@@ -2,11 +2,20 @@ const ctx = require('axel')
 const keypress = require('keypress')
 
 const Player = require('./player')
+const Pip = require('./pip')
+const { getGameWidth } = require('./utils')
 
 let gameLoop
 
-const p1 = new Player(10, 20, 'down', [255, 0, 0])
-const p2 = new Player(ctx.cols - 10, 20, 'down', [0, 0, 255])
+const p1 = new Player(10, 20, 'down', [0, 255, 0])
+const p2 = new Player(getGameWidth() - 10, 20, 'down', [0, 0, 255])
+const pip = new Pip()
+while (
+	(pip.x === p1.x && pip.y === p1.y) ||
+	(pip.x === p2.x && pip.y === p2.y)
+) {
+	pip.moveToRandLocation()
+}
 
 function move() {
 	p1.move()
@@ -18,6 +27,7 @@ function draw() {
 	ctx.clear()
 	p1.draw()
 	p2.draw()
+	pip.draw()
 	ctx.cursor.restore()
 	move()
 }
