@@ -5,7 +5,7 @@ class Player {
 		x = 0,
 		y = 0,
 		dir = 'down',
-		color = [255, 0, 0],
+		color = [0, 255, 0],
 		size = 1,
 		length = 10
 	) {
