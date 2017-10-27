@@ -57,11 +57,45 @@ module.exports.registerControls = function() {
 			case 'q':
 				endGame()
 				break
+			case 'w':
+				if (p1.dir !== 'down') {
+					p1.setDir('up')
+				}
+				break
+			case 's':
+				if (p1.dir !== 'up') {
+					p1.setDir('down')
+				}
+				break
+			case 'a':
+				if (p1.dir !== 'right') {
+					p1.setDir('left')
+				}
+				break
+			case 'd':
+				if (p1.dir !== 'left') {
+					p1.setDir('right')
+				}
+				break
 			case 'up':
+				if (p2.dir !== 'down') {
+					p2.setDir(key.name)
+				}
+				break
 			case 'down':
+				if (p2.dir !== 'up') {
+					p2.setDir(key.name)
+				}
+				break
 			case 'left':
+				if (p2.dir !== 'right') {
+					p2.setDir(key.name)
+				}
+				break
 			case 'right':
-				p1.setDir(key.name)
+				if (p2.dir !== 'left') {
+					p2.setDir(key.name)
+				}
 				break
 		}
 		if (key && key.ctrl && key.name == 'c') {
