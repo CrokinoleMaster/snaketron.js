@@ -1,5 +1,7 @@
 const ctx = require('axel')
 
+const { getGameWidth } = require('./utils')
+
 class Player {
 	constructor(
 		x = 0,
@@ -27,16 +29,32 @@ class Player {
 		const [x, y] = body[body.length - 1]
 		switch (this.dir) {
 			case 'up':
-				body.push([x, y - size])
+				if (y - size < 0) {
+					body.push([x, ctx.rows - size])
+				} else {
+					body.push([x, y - size])
+				}
 				break
 			case 'down':
-				body.push([x, y + size])
+				if (y + size > ctx.rows) {
+					body.push([x, size])
+				} else {
+					body.push([x, y + size])
+				}
 				break
 			case 'left':
-				body.push([x - 2 * size, y])
+				if (x - 2 * size < 0) {
+					body.push([getGameWidth() - 2 * size, y])
+				} else {
+					body.push([x - 2 * size, y])
+				}
 				break
 			case 'right':
-				body.push([x + 2 * size, y])
+				if (x + 2 * size > getGameWidth()) {
+					body.push([2 * size, y])
+				} else {
+					body.push([x + 2 * size, y])
+				}
 				break
 		}
 		this.body = body.slice(1)
