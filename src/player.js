@@ -13,7 +13,7 @@ class Player {
 	) {
 		this.body = []
 		for (let i = 0; i < length; i++) {
-			this.body.push([x, y - i])
+			this.body.unshift([x, y - i])
 		}
 		this.dir = dir
 		this.color = color
@@ -58,6 +58,14 @@ class Player {
 				break
 		}
 		this.body = body.slice(1)
+		for (let i = 0; i < this.body.length - 2; i++) {
+			if (
+				this.body[i][0] === this.body[this.body.length - 1][0] &&
+				this.body[i][1] === this.body[this.body.length - 1][1]
+			) {
+				this.body = this.body.slice(i)
+			}
+		}
 	}
 
 	draw() {
