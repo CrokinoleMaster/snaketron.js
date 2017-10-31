@@ -7,9 +7,9 @@ const { getGameWidth } = require('./utils')
 
 let gameLoop
 
-const p1 = new Player(10, 20, 'down', [0, 255, 0])
-const p2 = new Player(getGameWidth() - 10, 20, 'down', [0, 0, 255])
-const pip = new Pip()
+const p1 = new Player([116, 184, 22], 10, 20, 'down')
+const p2 = new Player([92, 124, 250], getGameWidth() - 10, 20, 'down')
+const pip = new Pip([244, 49, 49])
 
 function movePip() {
 	while (

@@ -4,10 +4,10 @@ const { getGameWidth } = require('./utils')
 
 class Player {
 	constructor(
+		color = [0, 255, 0],
 		x = 0,
 		y = 0,
 		dir = 'down',
-		color = [0, 255, 0],
 		size = 1,
 		length = 10
 	) {
@@ -88,8 +88,12 @@ class Player {
 
 	draw() {
 		const { body, color, size } = this
-		body.forEach(([x, y]) => {
-			ctx.bg(color[0], color[1], color[2])
+		body.forEach(([x, y], i) => {
+			if (i === body.length - 1) {
+				ctx.bg(255, 255, 255)
+			} else {
+				ctx.bg(color[0], color[1], color[2])
+			}
 			ctx.box(x, y, size * 2, size)
 		})
 	}

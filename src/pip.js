@@ -4,9 +4,9 @@ const { getGameWidth } = require('./utils')
 
 class Pip {
 	constructor(
+		color = [255, 0, 0],
 		x = getGameWidth() / 2,
 		y = Math.floor(ctx.rows / 2),
-		color = [255, 0, 0],
 		size = 1
 	) {
 		this.color = color
