@@ -27,10 +27,14 @@ function isCollision(a, b) {
 function checkCollisions() {
 	if (isCollision(p1, pip)) {
 		p1.setGrow()
+		p1.setPowered(true)
+		p2.setPowered(false)
 		movePip()
 	}
 	if (isCollision(p2, pip)) {
 		p2.setGrow()
+		p2.setPowered(true)
+		p1.setPowered(false)
 		movePip()
 	}
 }

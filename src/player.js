@@ -30,6 +30,11 @@ class Player {
 		return body[body.length - 1][1]
 	}
 
+	// powered wins in head to head collisions
+	setPowered(powered) {
+		this.powered = powered
+	}
+
 	setDir(dir) {
 		this.dir = dir
 	}
@@ -87,10 +92,14 @@ class Player {
 	}
 
 	draw() {
-		const { body, color, size } = this
+		const { body, color, size, powered } = this
 		body.forEach(([x, y], i) => {
 			if (i === body.length - 1) {
-				ctx.bg(255, 255, 255)
+				if (powered) {
+					ctx.bg(232, 89, 12)
+				} else {
+					ctx.bg(255, 255, 255)
+				}
 			} else {
 				ctx.bg(color[0], color[1], color[2])
 			}
