@@ -10,11 +10,14 @@ let gameLoop
 const p1 = new Player(10, 20, 'down', [0, 255, 0])
 const p2 = new Player(getGameWidth() - 10, 20, 'down', [0, 0, 255])
 const pip = new Pip()
-while (
-	(pip.x === p1.x && pip.y === p1.y) ||
-	(pip.x === p2.x && pip.y === p2.y)
-) {
-	pip.moveToRandLocation()
+
+function movePip() {
+	while (
+		(pip.x === p1.x && pip.y === p1.y) ||
+		(pip.x === p2.x && pip.y === p2.y)
+	) {
+		pip.moveToRandLocation()
+	}
 }
 
 function isCollision(a, b) {
@@ -24,9 +27,11 @@ function isCollision(a, b) {
 function checkCollisions() {
 	if (isCollision(p1, pip)) {
 		p1.setGrow()
+		movePip()
 	}
 	if (isCollision(p2, pip)) {
 		p2.setGrow()
+		movePip()
 	}
 }
 
@@ -56,6 +61,7 @@ function endGame() {
 module.exports.start = function() {
 	ctx.cursor.off()
 	ctx.clear()
+	movePip()
 	gameLoop = setInterval(() => {
 		draw()
 		move()
