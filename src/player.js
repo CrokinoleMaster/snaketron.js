@@ -20,12 +20,26 @@ class Player {
 		this.size = size
 	}
 
+	get x() {
+		const { body } = this
+		return body[body.length - 1][0]
+	}
+
+	get y() {
+		const { body } = this
+		return body[body.length - 1][1]
+	}
+
 	setDir(dir) {
 		this.dir = dir
 	}
 
+	setGrow() {
+		this.grow = true
+	}
+
 	move() {
-		const { body, size } = this
+		const { body, size, grow } = this
 		const [x, y] = body[body.length - 1]
 		switch (this.dir) {
 			case 'up':
@@ -57,7 +71,11 @@ class Player {
 				}
 				break
 		}
-		this.body = body.slice(1)
+		if (!grow) {
+			this.body = body.slice(1)
+		} else {
+			this.grow = false
+		}
 		for (let i = 0; i < this.body.length - 2; i++) {
 			if (
 				this.body[i][0] === this.body[this.body.length - 1][0] &&

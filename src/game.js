@@ -17,6 +17,19 @@ while (
 	pip.moveToRandLocation()
 }
 
+function isCollision(a, b) {
+	return a.x === b.x && a.y === b.y
+}
+
+function checkCollisions() {
+	if (isCollision(p1, pip)) {
+		p1.setGrow()
+	}
+	if (isCollision(p2, pip)) {
+		p2.setGrow()
+	}
+}
+
 function move() {
 	p1.move()
 	p2.move()
@@ -29,7 +42,6 @@ function draw() {
 	p2.draw()
 	pip.draw()
 	ctx.cursor.restore()
-	move()
 }
 
 function endGame() {
@@ -44,7 +56,11 @@ function endGame() {
 module.exports.start = function() {
 	ctx.cursor.off()
 	ctx.clear()
-	gameLoop = setInterval(draw, 1000 / 10)
+	gameLoop = setInterval(() => {
+		draw()
+		move()
+		checkCollisions()
+	}, 1000 / 10)
 	process.stdin.setRawMode(true)
 	keypress(process.stdin)
 	process.stdin.resume()
