@@ -6,11 +6,31 @@ const Pip = require('./pip')
 const { getGameWidth } = require('./utils')
 
 let gameLoop
-let paused = false
 
-const p1 = new Player([116, 184, 22], 10, 20, 'down')
-const p2 = new Player([92, 124, 250], getGameWidth() - 10, 20, 'down')
-const pip = new Pip([244, 49, 49])
+let paused = false
+let gameOver = false
+const P1_COLOR = [116, 184, 22]
+const P2_COLOR = [92, 124, 250]
+
+let p1 = new Player(P1_COLOR, 10, 20, 'down')
+let p2 = new Player(P2_COLOR, getGameWidth() - 10, 20, 'down')
+let pip = new Pip([244, 49, 49])
+
+function resetGame() {
+	paused = false
+	gameOver = false
+
+	p1 = new Player([116, 184, 22], 10, 20, 'down')
+	p2 = new Player([92, 124, 250], getGameWidth() - 10, 20, 'down')
+	pip = new Pip([244, 49, 49])
+}
+
+function printText(pauseText, color = [255, 255, 255]) {
+	const x = Math.floor(getGameWidth() / 2 - pauseText.length / 2)
+	const y = Math.floor(ctx.rows / 2)
+	ctx.fg.apply(ctx, color)
+	ctx.text(x, y, pauseText)
+}
 
 function movePip() {
 	while (
@@ -38,6 +58,16 @@ function checkCollisions() {
 		p1.setPowered(false)
 		movePip()
 	}
+	if (isCollision(p1, p2)) {
+		paused = true
+		if (p1.powered) {
+			printText('P1 WINS. Press "r" to reset', P1_COLOR)
+		} else if (p2.powered) {
+			printText('P2 WINS. Press "r" to reset', P2_COLOR)
+		} else {
+			printText('TIE. Press "r" to reset')
+		}
+	}
 }
 
 function move() {
@@ -63,25 +93,14 @@ function endGame() {
 	}
 }
 
-function pauseGame() {
-	paused = !paused
-	if (paused) {
-		const pauseText = 'PAUSED'
-		const x = Math.floor(getGameWidth() / 2 - pauseText.length / 2)
-		const y = Math.floor(ctx.rows / 2)
-		ctx.fg(255, 255, 255)
-		ctx.text(x, y, pauseText)
-	}
-}
-
 module.exports.start = function() {
 	ctx.cursor.off()
 	ctx.clear()
 	movePip()
 	gameLoop = setInterval(() => {
 		if (!paused) {
-			draw()
 			move()
+			draw()
 			checkCollisions()
 		}
 	}, 1000 / 10)
@@ -93,13 +112,17 @@ module.exports.start = function() {
 module.exports.registerControls = function() {
 	process.stdin.on('keypress', function(ch, key) {
 		switch (key.name) {
-			case 'p':
 			case 'escape':
-				pauseGame()
+				endGame()
 				break
 			case 'q':
 				endGame()
 				break
+			case 'r':
+				if (paused) {
+					resetGame()
+					break
+				}
 			case 'w':
 				if (p1.dir !== 'down') {
 					p1.setDir('up')
