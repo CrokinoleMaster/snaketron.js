@@ -6,6 +6,7 @@ const Pip = require('./pip')
 const { getGameWidth } = require('./utils')
 
 let gameLoop
+let paused = false
 
 const p1 = new Player([116, 184, 22], 10, 20, 'down')
 const p2 = new Player([92, 124, 250], getGameWidth() - 10, 20, 'down')
@@ -62,14 +63,27 @@ function endGame() {
 	}
 }
 
+function pauseGame() {
+	paused = !paused
+	if (paused) {
+		const pauseText = 'PAUSED'
+		const x = Math.floor(getGameWidth() / 2 - pauseText.length / 2)
+		const y = Math.floor(ctx.rows / 2)
+		ctx.fg(255, 255, 255)
+		ctx.text(x, y, pauseText)
+	}
+}
+
 module.exports.start = function() {
 	ctx.cursor.off()
 	ctx.clear()
 	movePip()
 	gameLoop = setInterval(() => {
-		draw()
-		move()
-		checkCollisions()
+		if (!paused) {
+			draw()
+			move()
+			checkCollisions()
+		}
 	}, 1000 / 10)
 	process.stdin.setRawMode(true)
 	keypress(process.stdin)
@@ -79,7 +93,10 @@ module.exports.start = function() {
 module.exports.registerControls = function() {
 	process.stdin.on('keypress', function(ch, key) {
 		switch (key.name) {
+			case 'p':
 			case 'escape':
+				pauseGame()
+				break
 			case 'q':
 				endGame()
 				break
