@@ -45,6 +45,16 @@ function isCollision(a, b) {
 	return a.x === b.x && a.y === b.y
 }
 
+function isInside(p1, p2) {
+	let res = false
+	p2.body.forEach(([x, y]) => {
+		if (p1.x === x && p1.y === y) {
+			res = true
+		}
+	})
+	return res
+}
+
 function checkCollisions() {
 	if (isCollision(p1, pip)) {
 		p1.setGrow()
@@ -58,7 +68,7 @@ function checkCollisions() {
 		p1.setPowered(false)
 		movePip()
 	}
-	if (isCollision(p1, p2)) {
+	if (isInside(p1, p2) && isInside(p2, p1)) {
 		paused = true
 		if (p1.powered) {
 			printText('P1 WINS. Press "r" to reset', P1_COLOR)
@@ -67,6 +77,14 @@ function checkCollisions() {
 		} else {
 			printText('TIE. Press "r" to reset')
 		}
+	}
+	if (isInside(p1, p2)) {
+		paused = true
+		printText('P2 WINS. Press "r" to reset', P2_COLOR)
+	}
+	if (isInside(p2, p1)) {
+		paused = true
+		printText('P1 WINS. Press "r" to reset', P1_COLOR)
 	}
 }
 
