@@ -25,6 +25,7 @@ $ <%= moduleName %> --help
     ponies & rainbows
 ```
 
+## SICK PR
 
 ## License
 
